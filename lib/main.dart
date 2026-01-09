@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'authentication/welcome.dart';
 import 'authentication/login.dart';
-import 'authentication/emaill.dart';
+import 'authentication/email.dart';
 import 'authentication/otp.dart';
 import 'authentication/register.dart';
 import 'password/forgot.dart';
@@ -34,6 +34,10 @@ class MyApp extends StatelessWidget {
         "/login": (context) => LoginPage(),
         "/email": (context) => EmailPage(),
         "/otp": (context) =>  OTPPage(),
+        // "/otp": (context) {
+        //   final email = ModalRoute.of(context)!.settings.arguments as String;
+        //   return OTPPage(email: email);
+        // },
         "/register": (context) => RegisterPage(),
         "/forgot": (context) => ForgotPage(),
         "/verify": (context) => VerifyPage(),
