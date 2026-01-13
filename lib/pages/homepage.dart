@@ -6,6 +6,7 @@ import '../components/room_cart.dart';
 import 'calculate.dart';
 import 'history.dart';
 import 'news.dart';
+import 'addroom.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -121,7 +122,7 @@ class HomeContent extends StatelessWidget {
             const SizedBox(height: 16),
             const TopCarousel(),
             const SizedBox(height: 24),
-            _usageHeader(),
+            _usageHeader(context),
             const SizedBox(height: 12),
             _roomGrid(),
           ],
@@ -192,7 +193,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _usageHeader() {
+  Widget _usageHeader(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -201,17 +202,24 @@ class HomeContent extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         OutlinedButton(
-          onPressed: () {},
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddRoom(),
+              ),
+            );
+
+            if (result != null) {
+              // contoh: update state / list room
+              debugPrint("Room baru: $result");
+            }
+          },
           child: const Text("+ Add room"),
         ),
       ],
     );
+
   }
 
   Widget _roomGrid() {
