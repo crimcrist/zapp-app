@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:zapp/pages/notifications.dart';
 
 import '../components/carousel.dart';
 import '../components/room_cart.dart';
@@ -118,7 +119,7 @@ class HomeContent extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 16),
-            _header(),
+            _header(context),
             const SizedBox(height: 16),
             const TopCarousel(),
             const SizedBox(height: 24),
@@ -131,7 +132,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _header() {
+  Widget _header(BuildContext context) {
     return Row(
       children: [
         const CircleAvatar(radius: 22),
@@ -187,7 +188,14 @@ class HomeContent extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.notifications_none_rounded),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const NotificationsPage(),
+              ),
+            );
+          },
         )
       ],
     );
