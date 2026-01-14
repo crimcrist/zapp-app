@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:zapp/pages/notifications.dart';
+import 'package:zapp/pages/profilepage.dart';
 
 import '../components/carousel.dart';
 import '../components/room_cart.dart';
@@ -140,7 +141,7 @@ class HomeContent extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NotificationsPage()
+                builder: (context) => const ProfilePage()
               ),
             );
           },
