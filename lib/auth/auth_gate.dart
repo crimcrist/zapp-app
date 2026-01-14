@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../pages/homepage.dart';
 import '../authentication/login.dart';
+import '../authentication/welcome.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -15,7 +16,7 @@ class AuthGate extends StatelessWidget {
       return const HomePage();
     } else {
       // Belum login
-      return const LoginPage();
+      return const WelcomePage();
     }
   }
 }

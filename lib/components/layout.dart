@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AuthLayout extends StatelessWidget {
   final Widget content;
-  final String? buttonText;          // nullable
-  final VoidCallback? onButtonPressed; // nullable
+  final String? buttonText;
+  final VoidCallback? onButtonPressed;
 
   const AuthLayout({
     super.key,
@@ -25,7 +25,7 @@ class AuthLayout extends StatelessWidget {
                 child: content,
               ),
             ),
-            if (buttonText != null && onButtonPressed != null) // tampilkan tombol hanya kalau ada
+            if (buttonText != null && onButtonPressed != null)
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                 child: SizedBox(

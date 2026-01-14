@@ -92,7 +92,7 @@ class _OTPPageState extends State<OTPPage> {
         .arguments as String;
 
     return WillPopScope(
-      onWillPop: () async => false, // BLOK BACK BUTTON
+      onWillPop: () async => false,
       child: AuthLayout(
         buttonText: "",
         onButtonPressed: null,

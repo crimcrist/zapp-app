@@ -95,8 +95,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
 
           const SizedBox(height: 24),
-
-          // EMAIL
           const Text("Email"),
           const SizedBox(height: 6),
           TextField(
@@ -117,8 +115,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
 
           const SizedBox(height: 16),
-
-          // PASSWORD
           const Text("Password"),
           const SizedBox(height: 6),
           TextField(
@@ -151,8 +147,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
 
           const SizedBox(height: 12),
-
-          // ERROR TEXT
           if (errorText != null)
             Center(
               child: Text(
@@ -165,8 +159,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
           const SizedBox(height: 24),
-
-          // LOGIN BUTTON
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
