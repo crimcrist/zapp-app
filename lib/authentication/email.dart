@@ -20,12 +20,20 @@ class _EmailPageState extends State<EmailPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailCtrl = TextEditingController();
 
+  String? errorMessage;
+
   Future<void> _sendOtp(String email) async {
     final supabase = Supabase.instance.client;
 
     await supabase.auth.signInWithOtp(
       email: email,
     );
+  }
+
+  @override
+  void dispose() {
+    emailCtrl.dispose();
+    super.dispose();
   }
 
   @override
@@ -40,6 +48,10 @@ class _EmailPageState extends State<EmailPage> {
         if (_formKey.currentState!.validate()) {
           final email = emailCtrl.text.trim();
 
+          setState(() {
+            errorMessage = null;
+          });
+
           try {
             await _sendOtp(email);
 
@@ -49,9 +61,9 @@ class _EmailPageState extends State<EmailPage> {
               arguments: email,
             );
           } catch (e) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(e.toString())),
-            );
+            setState(() {
+              errorMessage = "Failed to send OTP. Please try again.";
+            });
           }
         }
       },
@@ -63,7 +75,10 @@ class _EmailPageState extends State<EmailPage> {
             const Center(
               child: Text(
                 "Login or Register",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 50),
@@ -76,11 +91,16 @@ class _EmailPageState extends State<EmailPage> {
             const SizedBox(height: 24),
             const Text("Enter your email"),
             const SizedBox(height: 6),
+
             TextFormField(
               controller: emailCtrl,
               keyboardType: TextInputType.emailAddress,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              decoration: InputDecoration(border: field),
+              decoration: InputDecoration(
+                border: field,
+                enabledBorder: field,
+                focusedBorder: field,
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Email is required';
@@ -91,6 +111,17 @@ class _EmailPageState extends State<EmailPage> {
                 return null;
               },
             ),
+
+            if (errorMessage != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                errorMessage!,
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 13,
+                ),
+              ),
+            ],
           ],
         ),
       ),
