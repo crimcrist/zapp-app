@@ -1,28 +1,35 @@
+<p align="center">
+  <img src="https://assets.zapp.software/logo.png" width="100" alt="ZAPP! Logo" />
+</p>
 
-<h1>
+<p align="center">A mobile application for analyzing household electricity usage and promoting efficient, sustainable energy consumption.</p>
+  <p align="center">
+    <a href="LICENSE" target="_blank"><img src="https://img.shields.io/badge/license-GPL--3.0-green" alt="Package License" /></a>
+    <a href="https://flutter.dev/" target="_blank"><img src="https://img.shields.io/badge/Flutter-3.9.2+-blue?logo=flutter" alt="Flutter" /></a>
+    <a href="https://supabase.com/" target="_blank"><img src="https://img.shields.io/badge/Supabase-auth-3DD08F?logo=supabase" alt="Supabase"/></a>
+  </p>
 
-<img width="100" src="https://assets.zapp.software/logo.png">
-<br> ZAPP!
-</h1>
+## Description
 
-![](https://img.shields.io/badge/Flutter-3.9.2+-blue?logo=flutter) 
-![](https://img.shields.io/badge/Firebase-auth-3DD08F?logo=supabase)
+ZAPP! is a mobile application designed to help users understand, calculate, and analyze household electricity usage in a simple and structured way.  
+By allowing users to organize their home into rooms and assign electrical appliances to each room, ZAPP! provides accurate estimations of electricity consumption based on real usage patterns.
 
-ZAPP! is a mobile application designed to analyze household electricity usage and provide insightful information about energy consumption.  
-The app also aims to educate users on the importance of efficient and sustainable energy usage.
+The application records and visualizes electricity usage over daily, monthly, and yearly periods, enabling users to monitor trends and identify areas of excessive energy consumption.  
+Through these insights, users are encouraged to make informed decisions to reduce unnecessary electricity usage and optimize energy efficiency in their homes.
 
+In addition to calculation and monitoring features, ZAPP! also aims to raise awareness about sustainable energy practices.  
+By presenting clear data and historical comparisons, the app helps users understand the impact of their daily habits on overall energy consumption, supporting a more responsible and eco-friendly lifestyle.
 
 ## Features
 
-
 - **Electricity Usage Calculation**  
-  Calculate electricity consumption based on rooms and electrical appliances added by the user.
+  Calculate electricity consumption based on rooms and electrical appliances added by users.
 
 - **Room & Appliance Management**  
   Users can add multiple rooms and assign electrical devices to each room.
 
 - **Usage History**  
-  View saved  electricity consumption history for:
+  View saved electricity consumption history for:
   - Daily
   - Monthly
   - Yearly periods
@@ -33,25 +40,25 @@ The app also aims to educate users on the importance of efficient and sustainabl
 
 ## How It Works
 
-1. User registers or logs in to the application.
-2. User adds rooms in their house.
-3. User adds electrical appliances to each room.
-4. The app calculates electricity usage based on appliance data.
+1. Users register or log in to the application.
+2. Users add rooms in their house.
+3. Users assign electrical appliances to each room.
+4. The application calculates electricity usage based on appliance data.
 5. Users can view the usage and history over different time periods.
+
 ## Tech Stack
 | Category | Technology |
 |----------|------------|
 | Client   | Flutter    |
 | Auth     | Supabase   |
 
-
 ## Installation
 
 1. Clone the repository:
 
 ```bash
-  git clone https://github.com/darrentimotius/zapp-app.git
-  cd zapp-app
+git clone https://github.com/darrentimotius/zapp-app.git
+cd zapp-app
 ```
 
 2. Install dependencies:
@@ -62,7 +69,7 @@ flutter pub get
 
 3. Configure Supabase:
 
-    Create a Supabase project and setup the Environment Variables
+    Create a Supabase project and set up the required environment variables.
 
 4. Run the application:
 
@@ -71,7 +78,7 @@ flutter run
 ```
 ## Environment Variables
 
-To run this project, you will need to create .env file on root folder and add the following environment variables to your .env file
+To run this project, you will need to create .env file in the root folder and add the following environment variables:
 
 `SUPABASE_URL`
 
@@ -80,7 +87,7 @@ To run this project, you will need to create .env file on root folder and add th
 
 ## License
 
-ZAPP! is licensed under [GPL-3.0](https://choosealicense.com/licenses/gpl-3.0/)
+ZAPP! is licensed under [GPL-3.0](LICENSE)
 
 
 ## Contributing
