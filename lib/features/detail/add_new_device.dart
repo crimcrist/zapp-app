@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:zapp/core/components/layout.dart';
 
-class CalculatePage extends StatefulWidget {
-  const CalculatePage({super.key});
+class AddNewDevicePage  extends StatefulWidget {
+  const AddNewDevicePage ({super.key});
 
   @override
-  State<CalculatePage> createState() => _CalculatePageState();
+  State<AddNewDevicePage > createState() => _AddNewDevicePage ();
 }
 
-class _CalculatePageState extends State<CalculatePage> {
+class _AddNewDevicePage  extends State<AddNewDevicePage > {
   final TextEditingController itemNameController = TextEditingController();
   final TextEditingController startTimeController = TextEditingController();
   final TextEditingController endTimeController = TextEditingController();
