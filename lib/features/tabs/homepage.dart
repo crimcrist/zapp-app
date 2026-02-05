@@ -13,8 +13,7 @@ import 'calculate.dart';
 import 'history.dart';
 import 'news.dart';
 import 'package:zapp/features/detail/addroom.dart';
-import 'package:zapp/features/detail/Home_Office_page.dart';
-import 'package:zapp/features/detail/Kitchen_page.dart';
+import 'package:zapp/features/detail/detail_room.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -404,25 +403,12 @@ class _HomeContentState extends State<HomeContent> with RouteAware {
       children: items.map((e) {
         return GestureDetector(
           onTap: () {
-            if (e["name"] == "Home Office") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomeOfficePage(),
-                ),
-              );
-            } else if (e["name"] == "Kitchen") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const KitchenPage(),
-                ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${e["name"]} clicked')),
-              );
-            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeOfficePage(),
+              ),
+            );
           },
 
           child: RoomUsageCard(
