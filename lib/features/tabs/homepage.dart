@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: _navItem(Icons.calculate, 'Calculate', 1),
+            icon: _navItem(Icons.calculate, 'Simulation', 1),
             label: '',
           ),
           BottomNavigationBarItem(

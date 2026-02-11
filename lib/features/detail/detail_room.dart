@@ -25,9 +25,9 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
   };
 
   final TextEditingController energyController =
-  TextEditingController(text: "1");
+  TextEditingController(text: "20");
 
-  double energyUsage = 1.0;
+  double energyUsage = 20.0;
 
   @override
   void dispose() {
@@ -39,6 +39,28 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
     final picked = await showTimePicker(
       context: context,
       initialTime: isStart ? startTime : endTime,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            timePickerTheme: TimePickerThemeData(
+              backgroundColor: Colors.white,
+              hourMinuteColor: Colors.white,
+              hourMinuteTextColor: Colors.black,
+              dialHandColor: const Color(0xFFF2B599C),
+              dialBackgroundColor: Colors.white,
+              entryModeIconColor: Colors.blue,
+              dayPeriodColor: Colors.blue.shade100,
+              dayPeriodTextColor: Colors.blue.shade900,
+            ),
+            colorScheme: ColorScheme.light(
+              primary: const Color(0xFFF2B599C),
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (!mounted || picked == null) return;
@@ -52,25 +74,34 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
     });
   }
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F5F9),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _header(),
-            const SizedBox(height: 12),
-            _deviceTabs(),
-            const SizedBox(height: 12),
-            _mainCard(),
-            const SizedBox(height: 16),
-            _saveButton(),
-            const SizedBox(height: 24),
-          ],
-        ),
+      body: Column(
+        children: [
+          _header(),
+
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 12),
+                  _deviceTabs(),
+                  const SizedBox(height: 12),
+                  _mainCard(),
+                  const SizedBox(height: 16),
+                  _saveButton(),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
+
 
   // ================= HEADER =================
   Widget _header() {
@@ -270,7 +301,7 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
                     ),
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 120,
                     child: TextField(
                       controller: energyController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -282,7 +313,7 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        suffixText: " kWh",
+                        suffixText: " Watt",
                         suffixStyle: TextStyle(
                           fontSize: 24,
                           color: Colors.black,
