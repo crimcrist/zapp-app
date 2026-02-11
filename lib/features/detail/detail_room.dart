@@ -25,9 +25,9 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
   };
 
   final TextEditingController energyController =
-  TextEditingController(text: "1");
+  TextEditingController(text: "20");
 
-  double energyUsage = 1.0;
+  double energyUsage = 20.0;
 
   @override
   void dispose() {
@@ -270,7 +270,7 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
                     ),
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 120,
                     child: TextField(
                       controller: energyController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -282,7 +282,7 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        suffixText: " kWh",
+                        suffixText: " Watt",
                         suffixStyle: TextStyle(
                           fontSize: 24,
                           color: Colors.black,
