@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zapp/features/models/news.dart';
+import 'package:zapp/features/services/news_service.dart';
 
 class TopCarousel extends StatefulWidget {
   const TopCarousel({super.key});
@@ -8,26 +10,76 @@ class TopCarousel extends StatefulWidget {
 }
 
 class _TopCarouselState extends State<TopCarousel> {
-  final List<Map<String, String>> items = [
-    {
-      "image": "assets/images/carousel1.jpg",
-      "title": "6 Tips Menghindari Bahaya Aliran Listrik Saat Banjir"
-    },
-    {
-      "image": "assets/images/carousel2.jpg",
-      "title": "Waspada Bahaya Listrik di Musim Hujan"
-    },
-    {
-      "image": "assets/images/carousel3.jpg",
-      "title": "Sering Tertukar, Ini Perbedaan Meteran Listrik dan MCB"
-    },
-  ];
-
+  List<News> items = [];
   int currentIndex = 0;
   final PageController controller = PageController();
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNews();
+  }
+
+  Future<void> fetchNews() async {
+    try {
+      final result = await NewsService.fetchNews();
+
+      if (!mounted) return;
+
+      setState(() {
+        items = result.take(3).toList();
+        isLoading = false;
+      });
+    } catch (e) {
+      debugPrint("Error fetch news: $e");
+      setState(() => isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // ================= LOADING VERSION =================
+    if (isLoading) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          height: 160,
+          width: double.infinity,
+          color: Colors.grey.shade300,
+          alignment: Alignment.center,
+          child: const Text(
+            "Loading news...",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black54,
+            ),
+          ),
+        ),
+      );
+    }
+
+    // ================= EMPTY VERSION =================
+    if (items.isEmpty) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          height: 160,
+          width: double.infinity,
+          color: Colors.grey.shade300,
+          alignment: Alignment.center,
+          child: const Text(
+            "No news available",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black54,
+            ),
+          ),
+        ),
+      );
+    }
+
+    // ================= NORMAL UI (TIDAK DIUBAH) =================
     return ClipRRect(
       borderRadius: BorderRadius.circular(14),
       child: Stack(
@@ -42,16 +94,25 @@ class _TopCarouselState extends State<TopCarousel> {
               },
               itemBuilder: (context, index) {
                 final item = items[index];
+
                 return Stack(
                   alignment: Alignment.bottomLeft,
                   children: [
                     Stack(
                       children: [
-                        Image.asset(
-                          item["image"]!,
+                        Image.network(
+                          item.imageUrl,
                           height: 160,
                           width: double.infinity,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              height: 160,
+                              width: double.infinity,
+                              color: Colors.grey,
+                              child: const Icon(Icons.broken_image),
+                            );
+                          },
                         ),
                         Container(
                           height: 160,
@@ -65,8 +126,11 @@ class _TopCarouselState extends State<TopCarousel> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        item["title"]!,
-                        style: const TextStyle(color: Colors.white, fontSize: 15),
+                        item.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -86,7 +150,9 @@ class _TopCarouselState extends State<TopCarousel> {
                   width: currentIndex == index ? 10 : 6,
                   height: currentIndex == index ? 10 : 6,
                   decoration: BoxDecoration(
-                    color: currentIndex == index ? Colors.white : Colors.white54,
+                    color: currentIndex == index
+                        ? Colors.white
+                        : Colors.white54,
                     shape: BoxShape.circle,
                   ),
                 );

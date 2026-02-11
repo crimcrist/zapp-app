@@ -1,181 +1,168 @@
 import 'package:flutter/material.dart';
-import '../detail/detail_news.dart';
+import 'package:flutter/services.dart';
+import '../models/news.dart';
+import '../services/news_service.dart';
+import 'news_detail_page.dart';
 
-class NewsPage extends StatelessWidget {
+class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
 
   @override
+  State<NewsPage> createState() => _NewsPageState();
+}
+
+class _NewsPageState extends State<NewsPage>
+    with AutomaticKeepAliveClientMixin {
+
+  late Future<List<News>> futureNews;
+
+  @override
+  void initState() {
+    super.initState();
+    futureNews = NewsService.fetchNews(); // 🔥 fetch hanya sekali
+  }
+
+  @override
+  bool get wantKeepAlive => true; // 🔥 biar ga reload saat balik tab
+
+  String _formatDate(DateTime date) {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return "${date.day} ${months[date.month - 1]} ${date.year}";
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context); // 🔥 WAJIB untuk KeepAlive
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.transparent,
         elevation: 0,
-
-        // BACK BUTTON FIXED
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-
+        foregroundColor: Colors.black,
+        centerTitle: true,
         title: const Text(
           'News',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Colors.black,
+          ),
         ),
-        centerTitle: true,
       ),
+      body: FutureBuilder<List<News>>(
+        future: futureNews,
+        builder: (context, snapshot) {
 
-      // LISTVIEW SCROLL
-      body: ListView(
-        padding: const EdgeInsets.all(12),
-        children: [
-          NewsItem(
-            imagePath: 'assets/images/news1.png',
-            title: '6 Tips Menghindari Bahaya Aliran Listrik Saat Banjir',
-            author: 'Samuel',
-            date: 'Dec 12, 2024',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const NewsDetailPage(),
-              ),
-            ),
-          ),
-          NewsItem(
-            imagePath: 'assets/images/news2.png',
-            title:
-            'Tarif Listrik PLN 24–30 November 2025 untuk Golongan Subsidi dan Rumah Tangga',
-            author: 'Samuel',
-            date: 'Dec 12, 2024',
-          ),
-          NewsItem(
-            imagePath: 'assets/images/news3.png',
-            title:
-            'Rumah di Lereng Gunung Kelud Terbakar Akibat Korsleting Listrik',
-            author: 'Samuel',
-            date: 'Nov 25, 2025',
-          ),
-          NewsItem(
-            imagePath: 'assets/images/news4.png',
-            title:
-            'Kebakaran di Universitas Mega Buana Palopo Disebabkan Korsleting Listrik',
-            author: 'Samuel',
-            date: 'Nov 15, 2025',
-          ),
-          NewsItem(
-            imagePath: 'assets/images/news5.png',
-            title: 'Pahami Penyebab Korsleting Listrik & Cara Mengatasinya',
-            author: 'Samuel',
-            date: 'Feb 20, 2024',
-          ),
-          NewsItem(
-            imagePath: 'assets/images/carousel3.jpg',
-            title: 'Sering Tertukar, Ini Perbedaan Meteran Listrik dan MCB',
-            author: 'Samuel',
-            date: 'Feb 12, 2024',
-          ),
-          NewsItem(
-            imagePath: 'assets/images/carousel2.jpg',
-            title: 'Waspada Bahaya Listrik di Musim Hujan',
-            author: 'Samuel',
-            date: 'Mar 30, 2024',
-          ),
-          NewsItem(
-            imagePath: 'assets/images/news5.png',
-            title: 'Pahami Penyebab Korsleting Listrik & Cara Mengatasinya',
-            author: 'Samuel',
-            date: 'Apr 10, 2024',
-          ),
-        ],
-      ),
-    );
-  }
-}
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-class NewsItem extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String author;
-  final String date;
-  final VoidCallback? onTap;
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
 
-  const NewsItem({
-    super.key,
-    required this.imagePath,
-    required this.title,
-    required this.author,
-    required this.date,
-    this.onTap,
-  });
+          final newsList = snapshot.data ?? [];
 
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    imagePath,
-                    width: 90,
-                    height: 70,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: newsList.length,
+            itemBuilder: (context, index) {
+              final news = newsList[index];
+
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => NewsDetailPage(news: news),
+                    ),
+                  );
+                },
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            news.imageUrl,
+                            width: 100,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) =>
+                                const Icon(Icons.image_not_supported),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            author,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                news.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    news.author,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    _formatDate(news.publishedAt),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            date,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(
+                      thickness: 0.6,
+                      color: Color(0xFFE0E0E0),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Divider(height: 1),
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
       ),
     );
   }
