@@ -91,11 +91,9 @@ class _OTPPageState extends State<OTPPage> {
         .settings
         .arguments as String;
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: AuthLayout(
-        buttonText: "",
-        onButtonPressed: null,
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

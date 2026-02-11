@@ -125,119 +125,122 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthLayout(
-      buttonText: isLoading ? "Creating..." : "Create New Account",
-      onButtonPressed: isLoading ? null : _completeRegistration,
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-            child: Text(
-              "Create Account",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          const SizedBox(height: 24),
-          const Text("Username"),
-          const SizedBox(height: 6),
-          TextField(
-            controller: usernameCtrl,
-            decoration: InputDecoration(
-              enabledBorder: fieldBorder,
-              focusedBorder: fieldBorder.copyWith(
-                borderSide: const BorderSide(
-                  color: Color(0xFF2E64A5),
-                  width: 2,
-                ),
-              ),
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-          const Text("Password"),
-          const SizedBox(height: 6),
-          TextField(
-            controller: passwordCtrl,
-            obscureText: !passwordVisible,
-            autocorrect: false,
-            enableSuggestions: false,
-            decoration: InputDecoration(
-              enabledBorder: fieldBorder,
-              focusedBorder: fieldBorder.copyWith(
-                borderSide: const BorderSide(
-                  color: Color(0xFF2E64A5),
-                  width: 2,
-                ),
-              ),
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  passwordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(() => passwordVisible = !passwordVisible);
-                },
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-          const Text("Confirm Password"),
-          const SizedBox(height: 6),
-          TextField(
-            controller: confirmCtrl,
-            obscureText: !confirmPasswordVisible,
-            autocorrect: false,
-            enableSuggestions: false,
-            decoration: InputDecoration(
-              enabledBorder: fieldBorder,
-              focusedBorder: fieldBorder.copyWith(
-                borderSide: const BorderSide(
-                  color: Color(0xFF2E64A5),
-                  width: 2,
-                ),
-              ),
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  confirmPasswordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(() {
-                    confirmPasswordVisible =
-                    !confirmPasswordVisible;
-                  });
-                },
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
-          if (errorText != null)
-            Center(
+    return PopScope(
+      canPop: false,
+      child: AuthLayout(
+        buttonText: isLoading ? "Creating..." : "Create New Account",
+        onButtonPressed: isLoading ? null : _completeRegistration,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Center(
               child: Text(
-                errorText!,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 12,
-                ),
-                textAlign: TextAlign.center,
+                "Create Account",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
 
-          const SizedBox(height: 40),
-        ],
-      ),
-    );
+            const SizedBox(height: 24),
+            const Text("Username"),
+            const SizedBox(height: 6),
+            TextField(
+              controller: usernameCtrl,
+              decoration: InputDecoration(
+                enabledBorder: fieldBorder,
+                focusedBorder: fieldBorder.copyWith(
+                  borderSide: const BorderSide(
+                    color: Color(0xFF2E64A5),
+                    width: 2,
+                  ),
+                ),
+                contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+            const Text("Password"),
+            const SizedBox(height: 6),
+            TextField(
+              controller: passwordCtrl,
+              obscureText: !passwordVisible,
+              autocorrect: false,
+              enableSuggestions: false,
+              decoration: InputDecoration(
+                enabledBorder: fieldBorder,
+                focusedBorder: fieldBorder.copyWith(
+                  borderSide: const BorderSide(
+                    color: Color(0xFF2E64A5),
+                    width: 2,
+                  ),
+                ),
+                contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    passwordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() => passwordVisible = !passwordVisible);
+                  },
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+            const Text("Confirm Password"),
+            const SizedBox(height: 6),
+            TextField(
+              controller: confirmCtrl,
+              obscureText: !confirmPasswordVisible,
+              autocorrect: false,
+              enableSuggestions: false,
+              decoration: InputDecoration(
+                enabledBorder: fieldBorder,
+                focusedBorder: fieldBorder.copyWith(
+                  borderSide: const BorderSide(
+                    color: Color(0xFF2E64A5),
+                    width: 2,
+                  ),
+                ),
+                contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    confirmPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      confirmPasswordVisible =
+                      !confirmPasswordVisible;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            if (errorText != null)
+              Center(
+                child: Text(
+                  errorText!,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+            const SizedBox(height: 40),
+          ],
+        ),
+      )
+      );
   }
 }
