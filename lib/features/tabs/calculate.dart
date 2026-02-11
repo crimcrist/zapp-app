@@ -24,7 +24,7 @@ class _CalculatePage extends State<CalculatePage> {
   late int _yearPageStart;
   static const int _yearPageSize = 12;
 
-  String selectedRoom = 'Select';
+  String selectedRoom = 'All';
   @override
   void dispose() {
     _roomNameController.dispose();
@@ -670,7 +670,6 @@ class _CalculatePage extends State<CalculatePage> {
                   ),
                 ),
                 items: const [
-                  DropdownMenuItem(value: 'Select', child: Text('Select')),
                   DropdownMenuItem(value: 'All', child: Text('All')),
                   DropdownMenuItem(value: 'Kitchen', child: Text('Kitchen')),
                   DropdownMenuItem(value: 'Bedroom', child: Text('Bedroom')),
