@@ -481,6 +481,64 @@ class _HistoryState extends State<HistoryPage> {
     );
   }
 
+  void _printreport() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Print Report',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: Icon(
+                        Icons.close,
+                        size: 20,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+
+                Divider(color: Colors.grey.shade300),
+                _historyItem(
+                  title: 'Print Report',
+                  days: 'Print Report',
+                  start: 'Print Report',
+                  end: 'Print Report',
+                  watt: 'Print Report',
+                  wattColor: Colors.red,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _showHistoryPopup() {
     showDialog(
       context: context,
@@ -721,6 +779,19 @@ class _HistoryState extends State<HistoryPage> {
                         ),
                         InkWell(
                           onTap: () {
+                            _printreport();
+                          },
+                          child: Text(
+                            'Print Report',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.blue.shade700,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
                             _showHistoryPopup();
                           },
                           child: Text(
@@ -732,6 +803,7 @@ class _HistoryState extends State<HistoryPage> {
                             ),
                           ),
                         ),
+
 
                       ],
                     ),
