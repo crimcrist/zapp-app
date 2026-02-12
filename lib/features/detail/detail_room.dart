@@ -79,8 +79,24 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
             autofocus: true,
             decoration: const InputDecoration(
               labelText: "Enter item name",
+              labelStyle: const TextStyle(
+                color: Colors.black,
+              ),
               border: OutlineInputBorder(),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFF2B599C),
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0xFFF2B599C),
+                  width: 2,
+                ),
+              ),
             ),
+
           ),
           actions: [
             TextButton(
