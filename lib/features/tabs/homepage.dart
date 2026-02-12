@@ -218,12 +218,13 @@ class _HomeContentState extends State<HomeContent> with RouteAware {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text("Delete selected rooms?"),
-        content: const Text("This action cannot be undone."),
+        backgroundColor: Colors.white,
+        title: const Text("Delete this room?", style: TextStyle(fontWeight: FontWeight.bold),),
+        content: const Text("All items in this room will be permanently deleted."),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: const Text("Cancel", style: TextStyle(color: Colors.grey),)
           ),
           TextButton(
             onPressed: () {
@@ -235,7 +236,7 @@ class _HomeContentState extends State<HomeContent> with RouteAware {
             },
             child: const Text(
               "Delete",
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Color(0xFFF2B599C)),
             ),
           ),
         ],
