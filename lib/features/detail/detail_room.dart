@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'add_new_device.dart';
 
 class HomeOfficePage extends StatefulWidget {
   const HomeOfficePage({super.key});
@@ -26,6 +25,14 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
     "Saturday": false,
   };
 
+  List<String> devices = [
+    "Lamp",
+    "Air Conditioner",
+    "CCTV",
+    "Computer",
+    "Speaker",
+  ];
+
   final TextEditingController energyController =
   TextEditingController(text: "20");
 
@@ -51,6 +58,54 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
           : _titleController.text.trim();
       _isEditingTitle = false;
     });
+  }
+
+  void _showAddDeviceDialog() {
+    final TextEditingController deviceController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            "Add New Device",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: TextField(
+            controller: deviceController,
+            autofocus: true,
+            decoration: const InputDecoration(
+              labelText: "Enter item name",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+            ),
+            TextButton(
+              onPressed: () {
+                final newDevice = deviceController.text.trim();
+
+                if (newDevice.isNotEmpty) {
+                  setState(() {
+                    devices.add(newDevice);
+                    selectedDevice = newDevice;
+                  });
+                }
+
+                Navigator.pop(context);
+              },
+              child: const Text("Add", style: TextStyle(color: Color(0xFFF2B599C)),),
+            ),
+          ],
+        );
+      },
+    );
   }
 
 
@@ -207,12 +262,7 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
         borderRadius: BorderRadius.circular(8),
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const AddNewDevicePage(),
-          ),
-        );
+        _showAddDeviceDialog();
       },
     );
   }
@@ -225,11 +275,7 @@ class _HomeOfficePageState extends State<HomeOfficePage> {
         spacing: 8,
         children: [
           _addDeviceChip(),
-          _chip("Lamp"),
-          _chip("Air Conditioner"),
-          _chip("CCTV"),
-          _chip("Computer"),
-          _chip("Speaker"),
+          ...devices.map((device) => _chip(device)).toList(),
         ],
       ),
     );
